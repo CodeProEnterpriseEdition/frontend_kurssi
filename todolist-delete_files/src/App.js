@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
+import Todotable from './components/TodoTable'
 
 function App() {
   const [desc, setDesc] = useState('');
@@ -19,8 +20,12 @@ function App() {
 
   const addTodo = (event) => {
     event.preventDefault();
-    setTodos([...todos, desc]);
-    setDates([...dates, date]);
+    if(desc.length>0 && date.length>0){
+      setTodos([...todos, desc]);
+      setDates([...dates, date]);
+      setDate('')
+      setDesc('')
+    }
   }
 
   function deleteTodo(index) {
@@ -35,40 +40,10 @@ function App() {
         Description:
         <input type="text" onChange={inputChanged} value={desc}/>
         Date:
-        <input type="text" onChange={inputChangedDate} value={date}/>
+        <input type="date" onChange={inputChangedDate} value={date}/>
         <input type="submit" value="Add"/>
       </form>
-      <div className="tables">
-        <table className="table-1">
-          <tbody>
-            <tr>
-              <td>
-                {date_disc}
-              </td>
-            </tr>
-            {dates.map((date, index) =>
-            <tr key= {index}>
-              <td>{date}</td>
-            </tr>
-            )}
-            </tbody>
-        </table>   
-        <table className="table-2">
-          <tbody>
-            <tr>
-              <td>
-                {description}
-              </td>
-            </tr>
-            {todos.map((todo, index) => 
-            <tr key={index}>
-              <td>{todo}</td>
-              <td><button title='delete' onClick={() => deleteTodo(index)}>Delete</button></td>
-            </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+      <Todotable dates={dates} todos={todos} deleteTodo={deleteTodo} />
     </div>
   );
 };

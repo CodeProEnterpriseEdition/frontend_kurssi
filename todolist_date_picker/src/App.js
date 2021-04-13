@@ -1,4 +1,12 @@
 import React, { useState } from 'react';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  DatePicker,
+  TimePicker,
+  DateTimePicker,
+  MuiPickersUtilsProvider,
+} from '@material-ui/pickers';
+
 import './App.css';
 
 function App() {
@@ -9,7 +17,13 @@ function App() {
   const date_disc = 'Date'
   const description = 'Description'
 
+  const [selectedDate, handleDateChange] = useState(new Date());
 
+  function getdate(params) {
+    const string_date = params.toDateString();
+    console.log(string_date)
+    setDate(string_date)
+  }
   const inputChanged = (event) => {
     setDesc(event.target.value);
   }
@@ -35,7 +49,9 @@ function App() {
         Description:
         <input type="text" onChange={inputChanged} value={desc}/>
         Date:
-        <input type="text" onChange={inputChangedDate} value={date}/>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <DatePicker value={date} onChange={date => getdate(date)} />
+        </MuiPickersUtilsProvider>
         <input type="submit" value="Add"/>
       </form>
       <div className="tables">
@@ -69,6 +85,12 @@ function App() {
           </tbody>
         </table>
       </div>
+
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <DatePicker value={selectedDate} onChange={handleDateChange} />
+        <TimePicker value={selectedDate} onChange={handleDateChange} />
+        <DateTimePicker value={selectedDate} onChange={handleDateChange} />
+      </MuiPickersUtilsProvider>
     </div>
   );
 };

@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #1f55c2;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -28,6 +28,22 @@
   color: #61dafb;
 }
 
+.App-header2 {
+  max-height: 100px;
+  background-color: aqua;
+}
+
+.App-browser {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -35,25 +51,4 @@
   to {
     transform: rotate(360deg);
   }
-
 }
-.tables {
-  display: flex;
-  background-color: blueviolet;
-  justify-content: space-around;
-  margin-top: 2%;
-}
-.table-1 {
-  background-color: aqua;
-}
-.table-2 {
-  background-color: royalblue;
-}
-
-.header-item {
-  background-color: black;
-  color: white;
-  padding: 5%;
-}
-
-
