@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import Addtraining from './Addtraining';
 
 
 export default function () {
@@ -17,6 +18,20 @@ export default function () {
         fetch('https://customerrest.herokuapp.com/gettrainings')
         .then(response => response.json())
         .then(response => setTrainings(response))
+        .catch(err => console.error(err))
+    }
+
+    const addTraining = (training) => {
+        training.customer='https://customerrest.herokuapp.com/api/customers/' + training.customer
+        console.log(training)
+        fetch('https://customerrest.herokuapp.com/gettrainings', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(training)
+        })
+        .then(res => fetchData())
         .catch(err => console.error(err))
     }
 
@@ -44,6 +59,7 @@ export default function () {
 
     return (
         <div>
+            <Addtraining addTraining={addTraining} />
             <ReactTable filterable={true} data={trainings} columns={columns}></ReactTable>
             <Snackbar
                 anchorOrigin={{

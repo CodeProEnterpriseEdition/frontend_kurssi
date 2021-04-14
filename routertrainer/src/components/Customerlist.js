@@ -6,7 +6,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Addcustomer from './Addcustomer';
-import Editcar from './Editcar';
+import Editcustomer from './Editcustomer';
 
 export default function () {
     const [open, setOpen] = useState(false);
@@ -17,16 +17,18 @@ export default function () {
     const fetchData = () => {
         fetch('https://customerrest.herokuapp.com/api/customers')
         .then(response => response.json())
+        //.then(response => console.log(response.content[0].links[0].href))
         .then(response => setCustomers(response.content))
         .catch(err => console.error(err))
     }
 
-    const deleteCar = (link) => {
+    const removeCustomer = (link) => {
+        console.log(link)
         if (window.confirm('Are you sure?')){
             fetch(link, {method: 'Delete'})
             .then(res => fetchData())
             .catch(err => console.log(err))
-            setOpen(true);            
+            setOpen(true);
         }
     }
     const addCustomer = (customer) => {
@@ -41,13 +43,13 @@ export default function () {
         .catch(err => console.error(err))
     }
 
-    const updateCar = (car, link) => {
+    const updateCustomer = (customer, link) => {
         fetch(link, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(car)
+            body: JSON.stringify(customer)
         })
         .then(res=> fetchData())
         .catch(err => console.error(err))
@@ -57,7 +59,6 @@ export default function () {
         if (reason === 'clickaway') {
             return;
         }
-    
         setOpen(false);
     };
     const columns = [
@@ -88,6 +89,19 @@ export default function () {
         {
             Header: 'Phone',
             accessor: 'phone'
+        },
+        {
+            sortable: false,
+            filterable: false, 
+            width: 100,
+            Cell: row => <Editcustomer updateCustomer={updateCustomer} car={row.original}/>
+        },
+        {
+            sortable: false,
+            filterable: false, 
+            width: 100,
+            accessor: 'links[0].href',
+            Cell: row => <Button color="default" onClick={() => removeCustomer(row.value)}>Delete</Button>
         }
 
     ]
@@ -107,7 +121,6 @@ export default function () {
                 message="Customer removed"
                 action={
                 <React.Fragment>
-
                     <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
                         <CloseIcon fontSize="small" />
                     </IconButton>

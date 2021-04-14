@@ -7,21 +7,25 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-export default function Editcar(props) {
+export default function Editcustomer(props) {
     const [open, setOpen] = useState(false);
-    const [car, setCar] = useState({
-        brand: '', model: '', color: '', fuel: '', year: '', price: ''
+    const [customer, setCustomer] = useState({
+        firstname: '', lastname: '', streetaddress: '', postcode: '', city: '', email: '', phone: ''
     })
 
     const handleClickOpen = () => {
-        console.log(props.car)
-        setCar({brand: props.car.brand, 
-            model: props.car.model,
-            color: props.car.color, 
-            fuel: props.car.fuel, 
-            year: props.car.year,
-            price: props.car.price    
+        console.log("props.customer")
+        console.log(props.customer)
+        console.log("props.customer2")
+        setCustomer({firstname: props.customer.firstname, 
+            lastname: props.customer.lastname,
+            streetaddress: props.customer.streetaddress, 
+            postcode: props.customer.postcode, 
+            city: props.customer.city,
+            email: props.customer.email,
+            phone: props.customer.phone
         })
+        console.log("props.customer3")
         setOpen(true);
     };
 
@@ -30,11 +34,13 @@ export default function Editcar(props) {
     };
 
     const handleInputChange = (event) => {
-        setCar({...car, [event.target.name]: event.target.value})
+        console.log("handle")
+        setCustomer({...customer, [event.target.name]: event.target.value})
     }
 
-    const updateCar = () => {
-        props.updateCar(car, props.car._links.car.href);
+    const updateCustomer = () => {
+        console.log("hehe hemuli")
+        props.updateCustomer(customer, props.customer.links[0].href);
         handleClose();
     }
 
@@ -44,55 +50,63 @@ export default function Editcar(props) {
                 Edit
             </Button>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Edit Car</DialogTitle>
+                <DialogTitle id="form-dialog-title">Edit customer</DialogTitle>
                 <DialogContent>
-                    <TextField
+                <TextField
                         autoFocus
                         margin="dense"
-                        name="brand"
-                        value={car.brand}
+                        name="firstname"
+                        value={customer.firstname}
                         onChange={event => handleInputChange(event)}
-                        label="Brand"
+                        label="Firstname"
                         fullWidth
                     />
                     <TextField
                         margin="dense"
-                        name="model"
-                        value={car.model}
+                        name="lastname"
+                        value={customer.lastname}
                         onChange={event => handleInputChange(event)}
-                        label="Model"
+                        label="Lastname"
                         fullWidth
                     />
                     <TextField
                         margin="dense"
-                        name="color"
-                        value={car.color}
+                        name="streetaddress"
+                        value={customer.streetaddress}
                         onChange={event => handleInputChange(event)}
-                        label="Color"
+                        label="Street address"
                         fullWidth
                     />
                     <TextField
                         margin="dense"
-                        name="fuel"
-                        value={car.fuel}
+                        name="postcode"
+                        value={customer.postcode}
                         onChange={event => handleInputChange(event)}
-                        label="Fuel"
+                        label="Postcode"
                         fullWidth
                     />
                     <TextField
                         margin="dense"
-                        name="year"
-                        value={car.year}
+                        name="city"
+                        value={customer.city}
                         onChange={event => handleInputChange(event)}
-                        label="Year"
+                        label="City"
                         fullWidth
                     />
                     <TextField
                         margin="dense"
-                        name="price"
-                        value={car.price}
+                        name="email"
+                        value={customer.email}
                         onChange={event => handleInputChange(event)}
-                        label="Price"
+                        label="Email"
+                        fullWidth
+                    />
+                    <TextField
+                        margin="dense"
+                        name="phone"
+                        value={customer.phone}
+                        onChange={event => handleInputChange(event)}
+                        label="Phone"
                         fullWidth
                     />
                 </DialogContent>
@@ -100,7 +114,7 @@ export default function Editcar(props) {
                         <Button onClick={handleClose} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={updateCar} color="primary">
+                        <Button onClick={updateCustomer} color="primary">
                             Update
                         </Button>
                     </DialogActions>
